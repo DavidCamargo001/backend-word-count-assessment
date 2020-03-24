@@ -42,27 +42,53 @@ words as keys, and their counts as values.
 
 import sys
 
+
 # Your name, plus anyone who helped you with this assignment
 # Give credit where credit is due.
-__author__ = "???"
+__author__ = "David Camargo"
 
 
 def create_word_dict(filename):
-    """Returns a word/count dict for this filename."""
-    # Your code here
-    return
+    print(filename)
+    d = {}
+    with open(filename, 'r') as f:
+        for everyLine in f:
+            # print(everyLine)
+            # lower(), split() used to take from dict to string
+            # print("This is old lines", everyLine)
+            newLines = everyLine.split()
+            # print("This is new lines", newLines)
+            for word in newLines:
+                word = word.lower()
+                if word in d:
+                    # d[word] = d.get(word, 0) + 1
+                    d[word] += 1
+                else:
+                    d[word] = 1
+    # remember to return dict
+    return d
+
+
+# print(create_word_dict('books/alice.txt'))
 
 
 def print_words(filename):
-    """Prints one per line '<word> : <count>' sorted by word for the given file."""
     # Your code here
-    return
+    secDict = create_word_dict(filename)
+    # sort dict using sorted()
+    sDict = sorted(secDict)
+    for i in sDict:
+        # format! sexy
+        print("{}: {}".format(i, secDict[i]))
 
 
 def print_top(filename):
     """Prints the top count listing for the given file."""
-    # Your code here
-    return
+    topDict = create_word_dict(filename)
+    sortedTopDict = sorted(topDict.items(), key=lambda x: x[1], reverse=True)
+    print(sortedTopDict)
+    for key, value in sortedTopDict[:20]:
+        print("{}: {}".format(key, value))
 
 
 # This basic command line argument parsing code is provided and
